@@ -33,30 +33,44 @@ yarn build:development  # or yarn build:production
 ## Features
 
 ### Post Creation
+
 - **Federated/Local Toggle**: A dropdown in the compose form allowing users to choose between "Federated" (normal) and "Local Only" posting modes
 - **Non-Federating Posts**: Posts marked as local-only stay on your instance and won't be shared with other servers
 - **Edit Support**: The local-only setting can be changed when editing existing posts
 
 ### Admin Interface
+
 - **Local-Only Indicator**: Admin status views display a visual indicator for posts that are local-only
 
 ### User Interface
+
 - **Compose Form Integration**: Seamless dropdown integrated into the main compose form
 - **Status Display**: Local-only posts show an indicator in detailed views
 
 ## API Endpoints
 
 ### Local Only Settings
-```
+
+```text
 GET /api/v1/local_only_posts/getLocalOnlySetting  # Retrieve user's local-only posting preference
 ```
 
 ### Status Creation (Extended)
+
 The gem extends the existing Mastodon status endpoints to accept a `local_only` parameter:
-```
+
+```text
 POST /api/v1/statuses     # Create status (accepts local_only: boolean)
 PUT  /api/v1/statuses/:id # Update status (accepts local_only: boolean)
 ```
+
+## Configuration
+
+### Environment Variables
+
+This gem does not require any production/runtime environment variables.
+
+Local-only behavior is controlled through persisted server/user settings and request parameters (for example, `local_only` on status create/update), not through ENV keys.
 
 ## Development
 
@@ -76,7 +90,7 @@ bin/rubocop
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/patchwork-hub/local_only_posts. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/patchwork-hub/local_only_posts/blob/main/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at <https://github.com/patchwork-hub/local_only_posts>. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/patchwork-hub/local_only_posts/blob/main/CODE_OF_CONDUCT.md).
 
 ## License
 
