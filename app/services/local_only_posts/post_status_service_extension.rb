@@ -13,6 +13,10 @@ module LocalOnlyPosts::PostStatusServiceExtension
     ActivityPub::DistributionWorker.perform_async(@status.id) unless @status.local_only?
     PollExpirationNotifyWorker.perform_at(@status.poll.expires_at, @status.poll.id) if @status.poll
     ActivityPub::QuoteRequestWorker.perform_async(@status.quote.id) if @status.quote&.quoted_status.present? && !@status.quote&.quoted_status&.local?
+
+    # Below is from content filters gems, which need to know about the status regardless of whether it's local-only or not.
+    # /gems/content_filters/app/workers/ban_status_worker.rb
+    BanStatusWorker.perform_async(@status.id, { 'from' => 'post_status_service' }) if @status&.id.present?
   end
 
   def local_only_option(local_only, in_reply_to)
